@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       AppImages.img4,
       AppImages.img5,
     ];
+
     List<String> listTitles = [
       "Design Tips",
       "Portfolio",
@@ -39,117 +40,251 @@ class _HomePageState extends State<HomePage> {
       "Web Design",
       "Team",
     ];
-    return GetBuilder<HomePageVM>(builder: (logic) {
-      return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: _appBar(),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(const StoryPage());
-                      },
-                      child: Image.asset(AppImages.imgAvatar),
-                    ),
-                    Row(
+
+    List<String> images = [
+      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
+      "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
+      "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
+      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
+      "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
+      "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
+      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
+      "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
+      "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
+      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
+
+    ];
+
+    return GetBuilder<HomePageVM>(
+      builder: (logic) {
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: _appBar(),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        textInfUser(
-                          '2121',
-                          "Publicações",
-                        ),
-                        const SizedBox(width: 10),
-                        textInfUser(
-                          '421 m',
-                          "Seguidores",
-                        ),
-                        const SizedBox(width: 10),
-                        textInfUser(
-                          '2121',
-                          "A seguir",
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Username',
-                        style: AppTextStyle.black14Bold,
-                      ),
-                      Text(
-                        'Agência',
-                        style: AppTextStyle.grey14,
-                      ),
-                      Text(
-                        'O seu site de sonhos, está no sitio certo. 💻',
-                        style: AppTextStyle.black14W,
-                      ),
-                      Text(
-                        'codefive.pt',
-                        style: AppTextStyle.black14W,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Stack(
+                            InkWell(
+                              onTap: () {
+                                Get.to(const StoryPage());
+                              },
+                              child: Image.asset(AppImages.imgAvatar),
+                            ),
+                            Row(
                               children: [
-                                Container(
-                                  width: 100,
+                                textInfoUser(
+                                  '2121',
+                                  "Publicações",
                                 ),
-                                Image.asset(AppImages.imgFollow1),
-                                Positioned(
-                                  left: 20,
-                                  child: Image.asset(AppImages.imgFollow2),
+                                const SizedBox(width: 10),
+                                textInfoUser(
+                                  '421 m',
+                                  "Seguidores",
                                 ),
-                                Positioned(
-                                  left: 40,
-                                  child: Image.asset(AppImages.imgFollow3),
-                                )
+                                const SizedBox(width: 10),
+                                textInfoUser(
+                                  '2121',
+                                  "A seguir",
+                                ),
                               ],
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Seguido por joaocorreia09, vanda.carvalho e 16 outros amigos',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.black14W,
-                              ),
-                            ),
+                            )
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(listIcon.length,
-                              (index) => itemFeature(listIcon[index], listTitles[index])),
-                        ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Username',
+                                style: AppTextStyle.black14Bold,
+                              ),
+                              Text(
+                                'Agência',
+                                style: AppTextStyle.grey14,
+                              ),
+                              Text(
+                                'O seu site de sonhos, está no sitio certo. 💻',
+                                style: AppTextStyle.black14W,
+                              ),
+                              Text(
+                                'codefive.pt',
+                                style: AppTextStyle.black14W,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                        ),
+                                        Image.asset(AppImages.imgFollow1),
+                                        Positioned(
+                                          left: 20,
+                                          child:
+                                              Image.asset(AppImages.imgFollow2),
+                                        ),
+                                        Positioned(
+                                          left: 40,
+                                          child:
+                                              Image.asset(AppImages.imgFollow3),
+                                        )
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        'Seguido por joaocorreia09, vanda.carvalho e 16 outros amigos',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTextStyle.black14W,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    buttonContactBlue("Seguir"),
+                                    buttonContactGrey("Mensagem"),
+                                    buttonContactGrey("Contactar"),
+                                    buttonAddFr(),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: List.generate(
+                                      listIcon.length,
+                                      (index) => itemFeature(
+                                          listIcon[index], listTitles[index])),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xFFEFEFEF)),
+                                      child: SvgPicture.asset(
+                                          AppImages.icGridImages),
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xFFEFEFEF)),
+                                      child: SvgPicture.asset(
+                                          AppImages.icGridVideo),
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                          color: Color(0xFFEFEFEF)),
+                                      child: SvgPicture.asset(
+                                          AppImages.icGridProfile),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  gridImages(images),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
-  Widget textInfUser(String num, String type) {
+  Widget gridImages(List<String> images) {
+    return GridView.builder(
+      physics: const ScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisSpacing: 2,
+        crossAxisCount: 3,
+        mainAxisSpacing: 2,
+        childAspectRatio: 1,
+      ),
+      itemCount: images.length,
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return Container(
+          color: Colors.blue,
+          child: Image.network(
+            images[index],
+            fit: BoxFit.cover,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buttonAddFr() {
+    return Container(
+      padding: const EdgeInsets.all(13),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEFEFEF),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: SvgPicture.asset(AppImages.icAddFr),
+    );
+  }
+
+  Widget buttonContactBlue(String title) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 13),
+      decoration: BoxDecoration(
+        color: const Color(0xFF3597F0),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        title,
+        style: AppTextStyle.white14Bold,
+      ),
+    );
+  }
+
+  Widget buttonContactGrey(String title) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 13),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEFEFEF),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        title,
+        style: AppTextStyle.black14Bold,
+      ),
+    );
+  }
+
+  Widget textInfoUser(String num, String type) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -166,21 +301,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget itemFeature(String icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            icon,
-          ),
-          Text(
-            title,
-            style: AppTextStyle.black12W,
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          icon,
+        ),
+        Text(
+          title,
+          style: AppTextStyle.black12W,
+        ),
+      ],
     );
   }
 
