@@ -22,5 +22,9 @@ class AppImages {
   static const icHeart = 'assets/icons/ic_heart.svg';
   static const icSend = 'assets/icons/ic_send.svg';
   static const icX = 'assets/icons/ic_x.svg';
+  static const icAddFr = 'assets/icons/ic_add_fr.svg';
+  static const icGridImages = 'assets/icons/ic_grid_images.svg';
+  static const icGridVideo = 'assets/icons/ic_grid_video.svg';
+  static const icGridProfile = 'assets/icons/ic_grid_profile.svg';
 
 }
