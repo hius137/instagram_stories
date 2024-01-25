@@ -4,10 +4,5 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class HomePageVM extends GetxController{
   static HomePageVM get find => Get.find<HomePageVM>();
-  late bool isActive = false;
 
-  void activeBtn(){
-    isActive = !isActive;
-    update();
-  }
 }

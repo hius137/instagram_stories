@@ -52,14 +52,13 @@ class _HomePageState extends State<HomePage> {
       "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
       "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
       "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
-
     ];
 
     return GetBuilder<HomePageVM>(
       builder: (logic) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: _appBar(),
+          appBar: _buildAppBar(),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
@@ -80,17 +79,17 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Row(
                               children: [
-                                textInfoUser(
+                                buildTextInfoUser(
                                   '2121',
                                   "Publicações",
                                 ),
                                 const SizedBox(width: 10),
-                                textInfoUser(
+                                buildTextInfoUser(
                                   '421 m',
                                   "Seguidores",
                                 ),
                                 const SizedBox(width: 10),
-                                textInfoUser(
+                                buildTextInfoUser(
                                   '2121',
                                   "A seguir",
                                 ),
@@ -160,10 +159,22 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    buttonContactBlue("Seguir"),
-                                    buttonContactGrey("Mensagem"),
-                                    buttonContactGrey("Contactar"),
-                                    buttonAddFr(),
+                                    buildButtonContact(
+                                      "Seguir",
+                                      AppTextStyle.white14Bold,
+                                      "0xFF3597F0",
+                                    ),
+                                    buildButtonContact(
+                                      "Mensagem",
+                                      AppTextStyle.black14Bold,
+                                      "0xFFEFEFEF",
+                                    ),
+                                    buildButtonContact(
+                                      "Contactar",
+                                      AppTextStyle.black14Bold,
+                                      "0xFFEFEFEF",
+                                    ),
+                                    buildFollowButton(),
                                   ],
                                 ),
                               ),
@@ -174,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: List.generate(
                                       listIcon.length,
-                                      (index) => itemFeature(
+                                      (index) => buildItemFeature(
                                           listIcon[index], listTitles[index])),
                                 ),
                               ),
@@ -234,18 +245,22 @@ class _HomePageState extends State<HomePage> {
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return Container(
-          color: Colors.blue,
-          child: Image.network(
-            images[index],
-            fit: BoxFit.cover,
-          ),
+        return Image.network(
+          images[index],
+          fit: BoxFit.cover,
+          loadingBuilder: (BuildContext context, Widget child,
+              ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         );
       },
     );
   }
 
-  Widget buttonAddFr() {
+  Widget buildFollowButton() {
     return Container(
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
@@ -256,7 +271,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buttonContactBlue(String title) {
+  Widget buildButtonContact(
+      String title, TextStyle style, String colorButton) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 13),
       decoration: BoxDecoration(
@@ -270,21 +286,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buttonContactGrey(String title) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 13),
-      decoration: BoxDecoration(
-        color: const Color(0xFFEFEFEF),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        title,
-        style: AppTextStyle.black14Bold,
-      ),
-    );
-  }
-
-  Widget textInfoUser(String num, String type) {
+  Widget buildTextInfoUser(String num, String type) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -300,7 +302,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget itemFeature(String icon, String title) {
+  Widget buildItemFeature(String icon, String title) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -316,7 +318,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  AppBar _appBar() {
+  AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,

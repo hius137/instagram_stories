@@ -2,25 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:instagram_stories/views/stories/widget/video_widget.dart';
 
 class StoryWidget extends StatelessWidget {
-  final List<String> images;
-  final List<String> videos;
+  final List<String> data;
 
-  const StoryWidget({super.key, required this.images, required this.videos});
 
-  @override
+  const StoryWidget({super.key, required this.data});
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: images.length + videos.length,
+    return PageView.builder(
+      physics: const BouncingScrollPhysics(),
+      itemCount: data.length,
       itemBuilder: (context, index) {
-        if (index < images.length) {
-          return Image.network(images[index]);
-        } else {
-          return VideoWidget(videoUrl: videos[index - images.length]);
-        }
+        return buildPageViewItem(data[index]);
+      },
+    );
+  }
+
+  Widget buildPageViewItem(String item) {
+    if(item.endsWith(".jpeg")) {
+      return buildImageViewer(item);
+    }else{
+      return VideoWidget(videoUrl: item);
+    }
+  }
+
+  Widget buildImageViewer(String imageUrl) {
+    return Image.network(
+      imageUrl,
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) return child;
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
