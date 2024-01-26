@@ -2,49 +2,43 @@
   "stories": [
     {
       "user_id": 1,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg",
+      "url": "https://images.pexels.com/photos/19891532/pexels-photo-19891532.jpeg",
       "story_type": "image",
       "duration": 5
     },
     {
       "user_id": 2,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
+      "url": "https://images.pexels.com/photos/19891532/pexels-photo-19891532.jpeg",
       "story_type": "image",
       "duration": 5
     },
     {
       "user_id": 2,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
+      "url": "https://images.pexels.com/photos/19885419/pexels-photo-19885419.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://images.pexels.com/photos/19884483/pexels-photo-19884483.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://images.pexels.com/photos/19885419/pexels-photo-19885419.jpeg",
       "story_type": "image",
       "duration": 5
     },
     {
       "user_id": 2,
       "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg",
-      "story_type": "image",
-      "duration": 5
-    },
-    {
-      "user_id": 2,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
-      "story_type": "image",
-      "duration": 5
-    },
-    {
-      "user_id": 2,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg",
-      "story_type": "image",
-      "duration": 5
-    },
-    {
-      "user_id": 2,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
       "story_type": "image",
       "duration": 5
     },
     {
       "user_id": 3,
-      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "url": "https://images.pexels.com/photos/19992348/pexels-photo-19992348.jpeg",
       "story_type": "video",
       "duration": 5
     },
@@ -56,7 +50,7 @@
     },
     {
       "user_id": 4,
-      "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "url": "https://player.vimeo.com/external/296210754.hd.mp4?s=08c03c14c04f15d65901f25b542eb2305090a3d7&profile_id=175&oauth2_token_id=5744776",
       "story_type": "video",
       "duration": 5
     },
@@ -74,7 +68,7 @@
     },
     {
       "user_id": 5,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg",
+      "url": "https://images.pexels.com/photos/19992348/pexels-photo-19992348.jpeg",
       "story_type": "image",
       "duration": 5
     },
@@ -86,13 +80,13 @@
     },
     {
       "user_id": 5,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg",
+      "url": "https://images.pexels.com/photos/19988878/pexels-photo-19988878.jpeg",
       "story_type": "image",
       "duration": 5
     },
     {
       "user_id": 5,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg",
+      "url": "https://images.pexels.com/photos/19977685/pexels-photo-19977685.jpeg",
       "story_type": "image",
       "duration": 5
     }

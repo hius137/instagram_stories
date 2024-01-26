@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -6,8 +5,6 @@ import 'package:instagram_stories/commons/app_images.dart';
 import 'package:instagram_stories/commons/app_text_styles.dart';
 import 'package:instagram_stories/views/stories/story_page_vm.dart';
 import 'package:instagram_stories/views/stories/widget/story_widget.dart';
-import 'package:instagram_stories/views/stories/widget/video_widget.dart';
-import 'package:video_player/video_player.dart';
 
 class StoryPage extends StatefulWidget {
   const StoryPage({super.key});
@@ -16,27 +13,20 @@ class StoryPage extends StatefulWidget {
   State<StoryPage> createState() => _StoryPageState();
 }
 
-class _StoryPageState extends State<StoryPage> {
+class _StoryPageState extends State<StoryPage> with TickerProviderStateMixin {
   StoryPageVM vm = Get.put<StoryPageVM>(StoryPageVM());
   TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    vm.readJsonData(2);
+    vm.showProgress(this);
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StoryPageVM>(builder: (logic) {
-      List<String> data = [
-        "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
-        "https://player.vimeo.com/external/296210754.hd.mp4?s=08c03c14c04f15d65901f25b542eb2305090a3d7&profile_id=175&oauth2_token_id=57447761",
-        "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
-        "https://player.vimeo.com/external/517090081.sd.mp4?s=ee697395679ffeb176703b481af4395a8ca5ff1a&profile_id=164&oauth2_token_id=57447761",
-        "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
-        "https://player.vimeo.com/external/459389137.hd.mp4?s=964e360f6996936b708905b2fcf9bdd66c26de0d&profile_id=170&oauth2_token_id=57447761",
-
-      ];
       return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,
@@ -48,7 +38,11 @@ class _StoryPageState extends State<StoryPage> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 1.70,
-                    child: StoryWidget(data: data),
+                    child: StoryWidget(story: logic.storiesByIdUser),
+                  ),
+                  buildProgressBar(
+                    logic.storiesByIdUser.length,
+                    logic.currentIndex, logic.controller
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -128,5 +122,36 @@ class _StoryPageState extends State<StoryPage> {
         ),
       );
     });
+  }
+
+  Widget buildProgressBar(int totalStories, int curlIndex, AnimationController animationController) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        totalStories,
+        (index) => Expanded(
+          child: buildSingleProgress(index, curlIndex, animationController),
+        ),
+      ),
+    );
+  }
+
+  Widget buildSingleProgress(int index, int curIndex, AnimationController animationController) {
+    return LinearProgressIndicator(
+      value: animationController.value,
+      semanticsLabel: 'Linear progress indicator',
+    );
+
+    // return AnimatedContainer(
+    //   height: 5,
+    //   margin: const EdgeInsets.symmetric(horizontal: 5),
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.circular(3),
+    //     color: index == curIndex ? Colors.blue : Colors.white,
+    //   ),
+    //   duration: const Duration(seconds: 1),
+    //   // Provide an optional curve to make the animation feel smoother.
+    //   curve: Curves.easeInOut,
+    // );
   }
 }
