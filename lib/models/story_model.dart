@@ -5,15 +5,32 @@ enum StoryType {
 }
 
 class Story {
-  final String url;
-  final StoryType storyType;
-  final Duration duration;
-  final int userId;
+  String? url;
+  StoryType? storyType;
+  Duration? duration;
+  int? userId;
 
-  const Story({
-    required this.url,
-    required this.storyType,
-    required this.duration,
-    required this.userId,
+  Story({
+    this.url,
+    this.storyType,
+    this.duration,
+    this.userId,
   });
+
+  Story.fromJson(dynamic json) {
+    url = json['url'];
+    storyType = json['story_type'];
+    duration = json['duration'];
+    userId = json['user_id'];
+
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['url'] = url;
+    map['story_type'] = storyType;
+    map['story_type'] = storyType;
+    map['user_id'] = userId;
+    return map;
+  }
 }
