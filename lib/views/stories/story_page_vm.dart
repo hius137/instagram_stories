@@ -17,9 +17,10 @@ class StoryPageVM extends GetxController {
 
   PageController? pageStoryController = PageController();
   PageController? pageStoriesController = PageController();
-  late AnimationController controller;
 
-  int currentIndex = 0;
+  int currentIndexStory = 0;
+  int currentIndexStories = 0;
+
 
   Future<void> readJsonData() async {
     final String jsonData =
@@ -41,18 +42,15 @@ class StoryPageVM extends GetxController {
         listStories.where((element) => element.userId == idUser).toList();
   }
 
-  void showProgress(TickerProvider tickerProvider) {
-    controller = AnimationController(
-      vsync: tickerProvider,
-      duration: const Duration(seconds: 5),
-    )..addListener(() {
-        update();
-      });
-    controller.repeat(reverse: true);
+
+  void onChangePageStory(value) {
+    currentIndexStory = value;
+    update();
   }
 
-  void onChangePage(value) {
-    currentIndex = value;
+  void onChangePageStories(value) {
+    currentIndexStory = 0;
+    currentIndexStories = value;
     update();
   }
 }
