@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,11 +9,55 @@ import 'package:instagram_stories/models/story_model.dart';
 import 'package:instagram_stories/views/stories/story_page_vm.dart';
 import 'package:instagram_stories/views/stories/widget/video_widget.dart';
 
-class StoryWidget extends StatelessWidget {
-  final List<Story> story;
-  final StoryPageVM vm;
+class StoryWidget extends StatefulWidget {
+  final List<Story> stories;
 
-  const StoryWidget({super.key, required this.story, required this.vm});
+  const StoryWidget({super.key, required this.stories});
+
+  @override
+  State<StoryWidget> createState() => _StoryWidgetState();
+}
+
+class _StoryWidgetState extends State<StoryWidget>
+    with TickerProviderStateMixin {
+  StoryPageVM vm = Get.put<StoryPageVM>(StoryPageVM());
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(vsync: this);
+    final Story firstStory = widget.stories.first;
+    _loadStory(story: firstStory, animateToPage: false);
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController.stop();
+        _animationController.reset();
+        setState(() {
+          if (vm.currentIndexStory + 1 == widget.stories.length) {
+            vm.pageStoriesController?.animateToPage(
+              vm.currentIndexStories + 1,
+              duration: const Duration(milliseconds: 1),
+              curve: Curves.easeInOut,
+            );
+          }
+          if (vm.currentIndexStory + 1 < widget.stories.length) {
+            vm.currentIndexStory += 1;
+            _loadStory(story: widget.stories[vm.currentIndexStory]);
+          } else {
+            vm.currentIndexStory = 0;
+            _loadStory(story: widget.stories[vm.currentIndexStory]);
+          }
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,60 +76,83 @@ class StoryWidget extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: PageView.builder(
                       controller: vm.pageStoryController,
-                      onPageChanged: vm.onChangePage,
+                      onPageChanged: vm.onChangePageStory,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: story.length,
+                      itemCount: widget.stories.length,
                       itemBuilder: (context, index) {
                         return Stack(
                           children: [
                             SizedBox(
                               width: double.infinity,
                               height: double.infinity,
-                              child: buildPageViewItem(story[index]),
+                              child: buildLoadStory(widget.stories[index]),
                             ),
-                            Positioned(
-                              right: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  logic.pageStoryController?.nextPage(
-                                      duration: const Duration(milliseconds: 500),
-                                      curve: Curves.easeInOut);
-                                },
-                                child: Container(
-                                  width: 100,
-                                  height: MediaQuery.of(context).size.height,
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  logic.pageStoryController?.previousPage(
-                                      duration: const Duration(milliseconds: 500),
-                                      curve: Curves.easeInOut);
-                                },
-                                child: Container(
-                                  width: 100,
-                                  height: MediaQuery.of(context).size.height,
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                            ),
+                            logic.currentIndexStory == widget.stories.length - 1
+                                ? const SizedBox.shrink()
+                                : Positioned(
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        logic.pageStoryController?.nextPage(
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.easeInOut);
+                                        _animationController.stop();
+                                        _animationController.reset();
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
+                            logic.currentIndexStory == 0
+                                ? const SizedBox.shrink()
+                                : Positioned(
+                                    left: 0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        logic.pageStoryController?.previousPage(
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            curve: Curves.easeInOut);
+                                        _animationController.stop();
+                                        _animationController.reset();
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
                           ],
                         );
                       },
                     ),
                   ),
-                  buildProgressBar(
-                    story.length,
-                    logic.currentIndex,
-                    logic.controller,
+                  Row(
+                    children: widget.stories
+                        .asMap()
+                        .map((i, e) {
+                          return MapEntry(
+                            i,
+                            AnimatedBar(
+                              animationController: _animationController,
+                              position: i,
+                              currentIndex: logic.currentIndexStory,
+                            ),
+                          );
+                        })
+                        .values
+                        .toList(),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 15),
                     child: Row(
                       children: [
                         Image.asset(
@@ -107,7 +175,7 @@ class StoryWidget extends StatelessWidget {
                           AppImages.icMenuTopWhite,
                           fit: BoxFit.cover,
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 20),
                         InkWell(
                           onTap: () {
                             Get.back();
@@ -166,7 +234,9 @@ class StoryWidget extends StatelessWidget {
     );
   }
 
-  Widget buildPageViewItem(Story story) {
+  Widget buildLoadStory(
+    Story story,
+  ) {
     switch (story.storyType) {
       case StoryType.image:
         return buildImageViewer(
@@ -179,12 +249,24 @@ class StoryWidget extends StatelessWidget {
     }
   }
 
-  Widget buildImageViewer(String imageUrl) {
+  Widget buildImageViewer(
+    String imageUrl,
+  ) {
     return Image.network(
       imageUrl,
-      loadingBuilder: (BuildContext context, Widget child,
-          ImageChunkEvent? loadingProgress) {
-        if (loadingProgress == null) return child;
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (frame == null) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        _animationController.forward();
+        return child;
+      },
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
         return const Center(
           child: CircularProgressIndicator(),
         );
@@ -192,36 +274,96 @@ class StoryWidget extends StatelessWidget {
     );
   }
 
-  Widget buildProgressBar(int totalStories, int curlIndex,
-      AnimationController animationController) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        totalStories,
-        (index) => Expanded(
-          child: buildSingleProgress(index, curlIndex, animationController),
+  void _loadStory({
+    required Story story,
+    bool animateToPage = true,
+    bool animateToNextStories = false,
+  }) {
+    _animationController.stop();
+    _animationController.reset();
+    switch (story.storyType) {
+      case StoryType.image:
+        _animationController.duration = Duration(seconds: story.duration);
+        break;
+      case StoryType.video:
+        _animationController.duration = Duration(seconds: story.duration);
+        break;
+    }
+    if (animateToPage) {
+      vm.pageStoryController?.animateToPage(
+        vm.currentIndexStory,
+        duration: const Duration(milliseconds: 1),
+        curve: Curves.easeInOut,
+      );
+    }
+    if (animateToNextStories) {
+      vm.pageStoriesController?.animateToPage(
+        vm.currentIndexStories,
+        duration: const Duration(milliseconds: 1),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+}
+
+class AnimatedBar extends StatelessWidget {
+  final AnimationController animationController;
+  final int position;
+  final int currentIndex;
+
+  const AnimatedBar({
+    super.key,
+    required this.animationController,
+    required this.position,
+    required this.currentIndex,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 1.5),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: <Widget>[
+                _buildContainer(
+                  double.infinity,
+                  position < currentIndex
+                      ? Colors.white
+                      : Colors.white.withOpacity(0.5),
+                ),
+                position == currentIndex
+                    ? AnimatedBuilder(
+                        animation: animationController,
+                        builder: (context, child) {
+                          return _buildContainer(
+                            constraints.maxWidth * animationController.value,
+                            Colors.white,
+                          );
+                        },
+                      )
+                    : const SizedBox.shrink(),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget buildSingleProgress(
-      int index, int curIndex, AnimationController animationController) {
-    // return LinearProgressIndicator(
-    //   value: animationController.value,
-    //   semanticsLabel: 'Linear progress indicator',
-    // );
-
-    return AnimatedContainer(
-      height: 5,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
+  Container _buildContainer(double width, Color color) {
+    return Container(
+      height: 5.0,
+      width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(3),
-        color: index == curIndex ? Colors.blue : Colors.white,
+        color: color,
+        border: Border.all(
+          color: Colors.black26,
+          width: 0.8,
+        ),
+        borderRadius: BorderRadius.circular(3.0),
       ),
-      duration: const Duration(seconds: 1),
-      // Provide an optional curve to make the animation feel smoother.
-      curve: Curves.easeInOut,
     );
   }
 }

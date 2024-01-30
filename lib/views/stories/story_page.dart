@@ -10,36 +10,41 @@ class StoryPage extends StatefulWidget {
   State<StoryPage> createState() => _StoryPageState();
 }
 
-class _StoryPageState extends State<StoryPage> with TickerProviderStateMixin {
+class _StoryPageState extends State<StoryPage> {
   StoryPageVM vm = Get.put<StoryPageVM>(StoryPageVM());
 
   @override
   void initState() {
-    super.initState();
     vm.readJsonData();
-    vm.showProgress(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<StoryPageVM>(builder: (logic) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.black,
-        body: SafeArea(
-          child: PageView.builder(
-            controller: vm.pageStoriesController,
-            onPageChanged: vm.onChangePage,
-            itemCount: logic.list.length,
-            itemBuilder: (context, index) {
-              return StoryWidget(
-                story: logic.list[index],
-                vm: vm,
-              );
-            },
+    return GetBuilder<StoryPageVM>(
+      builder: (logic) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.black,
+          body: SafeArea(
+            child: PageView.builder(
+              controller: vm.pageStoriesController,
+              onPageChanged: vm.onChangePageStories,
+              itemCount: logic.list.length,
+              itemBuilder: (context, index) {
+                return StoryWidget(
+                  stories: logic.list[index],
+                );
+              },
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
