@@ -25,21 +25,24 @@ class _VideoWidgetState extends State<VideoWidget> {
     super.initState();
     _videoPlayerController =
         VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
-          ..initialize().then((value) {
-            if (mounted) {
-              Future.delayed(const Duration(seconds: 1)).then(
-                (value) => setState(
-                  () {
-                    isLoading = false;
-                  },
-                ),
-              );
-              _videoPlayerController.play();
-              widget.animationController.forward();
-              _videoPlayerController.setVolume(1);
+          ..initialize().then(
+            (value) {
+              if (mounted) {
+                Future.delayed(const Duration(seconds: 1)).then(
+                  (value) => setState(
+                    () {
+                      isLoading = false;
+                    },
+                  ),
+                );
+                widget.animationController.duration = _videoPlayerController.value.duration;
+                _videoPlayerController.play();
+                widget.animationController.forward();
+                _videoPlayerController.setVolume(1);
+              }
+            },
+          );
 
-            }
-          });
   }
 
   @override

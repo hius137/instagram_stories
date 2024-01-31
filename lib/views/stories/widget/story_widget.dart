@@ -293,7 +293,6 @@ class _StoryWidgetState extends State<StoryWidget>
         _animationController.duration = Duration(seconds: story.duration);
         break;
       case StoryType.video:
-        _animationController.duration = Duration(seconds: story.duration);
         break;
     }
     if (animateToPage) {
