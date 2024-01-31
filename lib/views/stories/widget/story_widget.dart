@@ -1,18 +1,23 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:instagram_stories/commons/app_images.dart';
 import 'package:instagram_stories/commons/app_text_styles.dart';
+import 'package:instagram_stories/models/entities/user_entity.dart';
 import 'package:instagram_stories/models/enum/story_type.dart';
-import 'package:instagram_stories/models/story_model.dart';
+import 'package:instagram_stories/models/entities/story_entity.dart';
 import 'package:instagram_stories/views/stories/story_page_vm.dart';
 import 'package:instagram_stories/views/stories/widget/video_widget.dart';
 
 class StoryWidget extends StatefulWidget {
   final List<Story> stories;
+  final User user;
 
-  const StoryWidget({super.key, required this.stories});
+  const StoryWidget({
+    super.key,
+    required this.stories,
+    required this.user,
+  });
 
   @override
   State<StoryWidget> createState() => _StoryWidgetState();
@@ -39,6 +44,9 @@ class _StoryWidgetState extends State<StoryWidget>
               duration: const Duration(milliseconds: 1),
               curve: Curves.easeInOut,
             );
+          }
+          if (vm.currentIndexStories + 1 < vm.list.length) {
+            _animationController.stop();
           }
           if (vm.currentIndexStory + 1 < widget.stories.length) {
             vm.currentIndexStory += 1;
@@ -135,34 +143,32 @@ class _StoryWidgetState extends State<StoryWidget>
                     ),
                   ),
                   Row(
-                    children: widget.stories
-                        .asMap()
-                        .map((i, e) {
-                          return MapEntry(
-                            i,
-                            AnimatedBar(
-                              animationController: _animationController,
-                              position: i,
-                              currentIndex: logic.currentIndexStory,
-                            ),
-                          );
-                        })
-                        .values
-                        .toList(),
+                    children: List.generate(
+                      widget.stories.length,
+                      (index) => AnimatedBar(
+                        animationController: _animationController,
+                        position: index,
+                        currentIndex: logic.currentIndexStory,
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 15),
                     child: Row(
                       children: [
-                        Image.asset(
-                          AppImages.imgAvatar,
-                          width: 40,
-                          height: 40,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                            widget.user.avtUrl,
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          'Username',
+                          widget.user.userName,
                           style: AppTextStyle.white14Bold,
                         ),
                         const SizedBox(width: 10),
@@ -245,6 +251,7 @@ class _StoryWidgetState extends State<StoryWidget>
       case StoryType.video:
         return VideoWidget(
           videoUrl: story.url,
+          animationController: _animationController,
         );
     }
   }

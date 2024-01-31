@@ -12,6 +12,7 @@ class AppImages {
   static const img3 = 'assets/images/ic_3.png';
   static const img4 = 'assets/images/ic_4.png';
   static const img5 = 'assets/images/ic_5.png';
+  static const imgPlay = 'assets/images/img_play.png';
 
   ///icon
   static const icArtist = 'assets/icons/ic_artist.svg';

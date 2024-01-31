@@ -5,12 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:instagram_stories/models/stories_model.dart';
-import 'package:instagram_stories/models/story_model.dart';
+import 'package:instagram_stories/models/entities/story_entity.dart';
+import 'package:instagram_stories/models/entities/user_entity.dart';
+import 'package:instagram_stories/models/response/response.dart';
 
 class StoryPageVM extends GetxController {
   static StoryPageVM get find => Get.find<StoryPageVM>();
 
+  List<User> listUser = [];
   List<Story> listStories = [];
   List<Story> listStoriesById = [];
   List list = [];
@@ -21,6 +23,13 @@ class StoryPageVM extends GetxController {
   int currentIndexStory = 0;
   int currentIndexStories = 0;
 
+  Future<void> getListUser() async {
+    final String jsonData =
+    await rootBundle.loadString('assets/data/data.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonData);
+    StoriesResponse storiesResponse = StoriesResponse.fromJson(jsonMap);
+    listUser = storiesResponse.user;
+  }
 
   Future<void> readJsonData() async {
     final String jsonData =
@@ -28,20 +37,22 @@ class StoryPageVM extends GetxController {
     Map<String, dynamic> jsonMap = json.decode(jsonData);
     StoriesResponse storiesResponse = StoriesResponse.fromJson(jsonMap);
     listStories = storiesResponse.stories;
-    int i;
-    for (i = 1; i <= 5; i++) {
+
+    // for (int i = 1; i <= 5; i++) {
+    //   for (var element in listStories) {
+    //     if (element.userId == i) {
+    //       listStoriesById.add(element);
+    //     }
+    //   }
+    //   list.add(listStoriesById);
+    // }
+    for (int idUser = 1; idUser <= listUser.length; idUser++) {
       listStoriesById =
-          listStories.where((element) => element.userId == i).toList();
+          listStories.where((element) => element.userId == idUser).toList();
       list.add(listStoriesById);
     }
     update();
   }
-
-  void getStoryByUserId(int idUser) {
-    listStoriesById =
-        listStories.where((element) => element.userId == idUser).toList();
-  }
-
 
   void onChangePageStory(value) {
     currentIndexStory = value;
