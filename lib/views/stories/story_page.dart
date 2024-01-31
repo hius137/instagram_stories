@@ -15,6 +15,7 @@ class _StoryPageState extends State<StoryPage> {
 
   @override
   void initState() {
+    vm.getListUser();
     vm.readJsonData();
     super.initState();
   }
@@ -39,6 +40,7 @@ class _StoryPageState extends State<StoryPage> {
               itemBuilder: (context, index) {
                 return StoryWidget(
                   stories: logic.list[index],
+                  user: logic.listUser[index],
                 );
               },
             ),

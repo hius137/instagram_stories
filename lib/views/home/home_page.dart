@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:instagram_stories/commons/app_images.dart';
 import 'package:instagram_stories/commons/app_text_styles.dart';
+import 'package:instagram_stories/models/enum/story_type.dart';
+import 'package:instagram_stories/models/entities/story_entity.dart';
 import 'package:instagram_stories/views/home/home_page_vm.dart';
 import 'package:instagram_stories/views/stories/story_page.dart';
 
@@ -16,44 +17,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomePageVM vm = Get.put<HomePageVM>(HomePageVM());
+  List<String> listIcon = [
+    AppImages.img1,
+    AppImages.img2,
+    AppImages.img3,
+    AppImages.img4,
+    AppImages.img5,
+  ];
+  List<String> listTitles = [
+    "Design Tips",
+    "Portfolio",
+    "Resources",
+    "UI Basics",
+    "Web Design",
+    "Team",
+  ];
 
   @override
   void initState() {
     super.initState();
+    vm.readJsonData();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> listIcon = [
-      AppImages.img1,
-      AppImages.img2,
-      AppImages.img3,
-      AppImages.img4,
-      AppImages.img5,
-    ];
-
-    List<String> listTitles = [
-      "Design Tips",
-      "Portfolio",
-      "Resources",
-      "UI Basics",
-      "Web Design",
-      "Team",
-    ];
-
-    List<String> images = [
-      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
-      "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
-      "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
-      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
-      "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
-      "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
-      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
-      "https://images.pexels.com/photos/19867843/pexels-photo-19867843.jpeg",
-      "https://images.pexels.com/photos/19855379/pexels-photo-19855379.jpeg",
-      "https://images.pexels.com/photos/19869392/pexels-photo-19869392.jpeg",
-    ];
-
     return GetBuilder<HomePageVM>(
       builder: (logic) {
         return Scaffold(
@@ -222,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  gridImages(images),
+                  gridImages(vm.listStories),
                 ],
               ),
             ),
@@ -232,7 +219,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget gridImages(List<String> images) {
+  Widget gridImages(List<Story> stories) {
     return GridView.builder(
       physics: const ScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -241,21 +228,28 @@ class _HomePageState extends State<HomePage> {
         mainAxisSpacing: 2,
         childAspectRatio: 1,
       ),
-      itemCount: images.length,
+      itemCount: stories.length,
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return Image.network(
-          images[index],
-          fit: BoxFit.cover,
-          loadingBuilder: (BuildContext context, Widget child,
-              ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) return child;
-            return const Center(
-              child: CircularProgressIndicator(),
+        switch (stories[index].storyType) {
+          case StoryType.image:
+            return Image.network(
+              stories[index].url,
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             );
-          },
-        );
+          case StoryType.video:
+            return Center(
+              child: Image.asset(AppImages.imgPlay),
+            );
+        }
       },
     );
   }

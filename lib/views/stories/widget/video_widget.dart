@@ -3,10 +3,12 @@ import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
   final String videoUrl;
+  final AnimationController animationController;
 
   const VideoWidget({
     super.key,
     required this.videoUrl,
+    required this.animationController,
   });
 
   @override
@@ -25,9 +27,6 @@ class _VideoWidgetState extends State<VideoWidget> {
         VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
           ..initialize().then((value) {
             if (mounted) {
-              _videoPlayerController.play();
-              _videoPlayerController.setVolume(1);
-
               Future.delayed(const Duration(seconds: 1)).then(
                 (value) => setState(
                   () {
@@ -35,6 +34,10 @@ class _VideoWidgetState extends State<VideoWidget> {
                   },
                 ),
               );
+              _videoPlayerController.play();
+              widget.animationController.forward();
+              _videoPlayerController.setVolume(1);
+
             }
           });
   }
