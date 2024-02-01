@@ -40,7 +40,7 @@ class StoryPageVM extends GetxController {
 
     for (User user in listUser) {
       int idUser = user.userId;
-      List<Story> listStoriesById =
+      listStoriesById =
       listStories.where((element) => element.userId == idUser).toList();
       list.add(listStoriesById);
     }
