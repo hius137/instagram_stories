@@ -38,22 +38,17 @@ class _StoryWidgetState extends State<StoryWidget>
         _animationController.stop();
         _animationController.reset();
         setState(() {
-          if (vm.currentIndexStory + 1 == widget.stories.length) {
+          if (vm.currentIndexStory + 1 < widget.stories.length) {
+
+            vm.currentIndexStory += 1;
+            _loadStory(story: widget.stories[vm.currentIndexStory]);
+          }
+          else {
             vm.pageStoriesController?.animateToPage(
               vm.currentIndexStories + 1,
               duration: const Duration(milliseconds: 1),
               curve: Curves.easeInOut,
             );
-          }
-          if (vm.currentIndexStories + 1 < vm.list.length) {
-            _animationController.stop();
-          }
-          if (vm.currentIndexStory + 1 < widget.stories.length) {
-            vm.currentIndexStory += 1;
-            _loadStory(story: widget.stories[vm.currentIndexStory]);
-          } else {
-            vm.currentIndexStory = 0;
-            _loadStory(story: widget.stories[vm.currentIndexStory]);
           }
         });
       }
@@ -80,8 +75,14 @@ class _StoryWidgetState extends State<StoryWidget>
               Stack(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * 0.8,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     child: PageView.builder(
                       controller: vm.pageStoryController,
                       onPageChanged: vm.onChangePageStory,
@@ -98,45 +99,51 @@ class _StoryWidgetState extends State<StoryWidget>
                             logic.currentIndexStory == widget.stories.length - 1
                                 ? const SizedBox.shrink()
                                 : Positioned(
-                                    right: 0,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        logic.pageStoryController?.nextPage(
-                                            duration: const Duration(
-                                                milliseconds: 500),
-                                            curve: Curves.easeInOut);
-                                        _animationController.stop();
-                                        _animationController.reset();
-                                      },
-                                      child: Container(
-                                        width: 100,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  logic.pageStoryController?.nextPage(
+                                      duration: const Duration(
+                                          milliseconds: 500),
+                                      curve: Curves.easeInOut);
+                                  _animationController.stop();
+                                  _animationController.reset();
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height:
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height,
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
                             logic.currentIndexStory == 0
                                 ? const SizedBox.shrink()
                                 : Positioned(
-                                    left: 0,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        logic.pageStoryController?.previousPage(
-                                            duration: const Duration(
-                                                milliseconds: 500),
-                                            curve: Curves.easeInOut);
-                                        _animationController.stop();
-                                        _animationController.reset();
-                                      },
-                                      child: Container(
-                                        width: 100,
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
+                              left: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  logic.pageStoryController?.previousPage(
+                                      duration: const Duration(
+                                          milliseconds: 500),
+                                      curve: Curves.easeInOut);
+                                  _animationController.stop();
+                                  _animationController.reset();
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height:
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height,
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
                           ],
                         );
                       },
@@ -145,11 +152,12 @@ class _StoryWidgetState extends State<StoryWidget>
                   Row(
                     children: List.generate(
                       widget.stories.length,
-                      (index) => AnimatedBar(
-                        animationController: _animationController,
-                        position: index,
-                        currentIndex: logic.currentIndexStory,
-                      ),
+                          (index) =>
+                          AnimatedBar(
+                            animationController: _animationController,
+                            position: index,
+                            currentIndex: logic.currentIndexStory,
+                          ),
                     ),
                   ),
                   Padding(
@@ -203,7 +211,10 @@ class _StoryWidgetState extends State<StoryWidget>
                   children: [
                     SizedBox(
                       height: 45,
-                      width: MediaQuery.of(context).size.width * 0.75,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.75,
                       child: TextFormField(
                         controller: null,
                         decoration: InputDecoration(
@@ -240,9 +251,7 @@ class _StoryWidgetState extends State<StoryWidget>
     );
   }
 
-  Widget buildLoadStory(
-    Story story,
-  ) {
+  Widget buildLoadStory(Story story,) {
     switch (story.storyType) {
       case StoryType.image:
         return buildImageViewer(
@@ -256,9 +265,7 @@ class _StoryWidgetState extends State<StoryWidget>
     }
   }
 
-  Widget buildImageViewer(
-    String imageUrl,
-  ) {
+  Widget buildImageViewer(String imageUrl,) {
     return Image.network(
       imageUrl,
       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
@@ -284,7 +291,6 @@ class _StoryWidgetState extends State<StoryWidget>
   void _loadStory({
     required Story story,
     bool animateToPage = true,
-    bool animateToNextStories = false,
   }) {
     _animationController.stop();
     _animationController.reset();
@@ -293,19 +299,11 @@ class _StoryWidgetState extends State<StoryWidget>
         _animationController.duration = Duration(seconds: story.duration);
         break;
       case StoryType.video:
-        _animationController.duration = Duration(seconds: story.duration);
         break;
     }
     if (animateToPage) {
       vm.pageStoryController?.animateToPage(
         vm.currentIndexStory,
-        duration: const Duration(milliseconds: 1),
-        curve: Curves.easeInOut,
-      );
-    }
-    if (animateToNextStories) {
-      vm.pageStoriesController?.animateToPage(
-        vm.currentIndexStories,
         duration: const Duration(milliseconds: 1),
         curve: Curves.easeInOut,
       );
@@ -342,14 +340,14 @@ class AnimatedBar extends StatelessWidget {
                 ),
                 position == currentIndex
                     ? AnimatedBuilder(
-                        animation: animationController,
-                        builder: (context, child) {
-                          return _buildContainer(
-                            constraints.maxWidth * animationController.value,
-                            Colors.white,
-                          );
-                        },
-                      )
+                  animation: animationController,
+                  builder: (context, child) {
+                    return _buildContainer(
+                      constraints.maxWidth * animationController.value,
+                      Colors.white,
+                    );
+                  },
+                )
                     : const SizedBox.shrink(),
               ],
             );

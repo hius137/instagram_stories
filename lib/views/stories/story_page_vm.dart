@@ -38,19 +38,13 @@ class StoryPageVM extends GetxController {
     StoriesResponse storiesResponse = StoriesResponse.fromJson(jsonMap);
     listStories = storiesResponse.stories;
 
-    // for (int i = 1; i <= 5; i++) {
-    //   for (var element in listStories) {
-    //     if (element.userId == i) {
-    //       listStoriesById.add(element);
-    //     }
-    //   }
-    //   list.add(listStoriesById);
-    // }
-    for (int idUser = 1; idUser <= listUser.length; idUser++) {
-      listStoriesById =
-          listStories.where((element) => element.userId == idUser).toList();
+    for (User user in listUser) {
+      int idUser = user.userId;
+      List<Story> listStoriesById =
+      listStories.where((element) => element.userId == idUser).toList();
       list.add(listStoriesById);
     }
+
     update();
   }
 
