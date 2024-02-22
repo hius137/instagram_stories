@@ -1,0 +1,121 @@
+{
+  "user": [
+    {
+      "user_id": 1,
+      "avt_url": "https://images.pexels.com/photos/19891532/pexels-photo-19891532.jpeg",
+      "user_name": "lamdt"
+    },
+    {
+      "user_id": 2,
+      "avt_url": "https://images.pexels.com/photos/19891532/pexels-photo-19891532.jpeg",
+      "user_name": "chungdk"
+    },
+    {
+      "user_id": 3,
+      "avt_url": "https://images.pexels.com/photos/19885419/pexels-photo-19885419.jpeg",
+      "user_name": "linhtnd"
+    },
+    {
+      "user_id": 4,
+      "avt_url": "https://images.pexels.com/photos/19891532/pexels-photo-19891532.jpeg",
+      "user_name": "linhtn1"
+    },
+    {
+      "user_id": 5,
+      "avt_url": "https://images.pexels.com/photos/19988878/pexels-photo-19988878.jpeg",
+      "user_name": "hieuvm"
+    }
+  ],
+  "stories": [
+    {
+      "user_id": 1,
+      "url": "https://images.pexels.com/photos/19891532/pexels-photo-19891532.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://images.pexels.com/photos/19977685/pexels-photo-19977685.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://images.pexels.com/photos/19885419/pexels-photo-19885419.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://images.pexels.com/photos/19884483/pexels-photo-19884483.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://images.pexels.com/photos/19885419/pexels-photo-19885419.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 2,
+      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 3,
+      "url": "https://player.vimeo.com/external/296210754.hd.mp4?s=08c03c14c04f15d65901f25b542eb2305090a3d7&profile_id=175&oauth2_token_id=5744776",
+      "story_type": "video",
+      "duration": 10
+    },
+    {
+      "user_id": 4,
+      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+      "story_type": "video",
+      "duration": 10
+    },
+    {
+      "user_id": 4,
+      "url": "https://player.vimeo.com/external/296210754.hd.mp4?s=08c03c14c04f15d65901f25b542eb2305090a3d7&profile_id=175&oauth2_token_id=5744776",
+      "story_type": "video",
+      "duration": 10
+    },
+    {
+      "user_id": 4,
+      "url": "https://player.vimeo.com/external/296210754.hd.mp4?s=08c03c14c04f15d65901f25b542eb2305090a3d7&profile_id=175&oauth2_token_id=5744776",
+      "story_type": "video",
+      "duration": 10
+    },
+    {
+      "user_id": 5,
+      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      "story_type": "video",
+      "duration": 10
+    },
+    {
+      "user_id": 5,
+      "url": "https://images.pexels.com/photos/19992348/pexels-photo-19992348.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 5,
+      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+      "story_type": "video",
+      "duration": 10
+    },
+    {
+      "user_id": 5,
+      "url": "https://images.pexels.com/photos/19988878/pexels-photo-19988878.jpeg",
+      "story_type": "image",
+      "duration": 5
+    },
+    {
+      "user_id": 5,
+      "url": "https://images.pexels.com/photos/19977685/pexels-photo-19977685.jpeg",
+      "story_type": "image",
+      "duration": 5
+    }
+  ]
+}

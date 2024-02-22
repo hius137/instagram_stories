@@ -20,7 +20,7 @@ class AppTextStyle {
       color: const Color(0xff000000),
       fontWeight: FontWeight.normal);
 
-  //s12
+  //s14
   static final black14Bold = GoogleFonts.poppins(
       fontSize: 14,
       color: const Color(0xff000000),
@@ -28,6 +28,10 @@ class AppTextStyle {
   static final black14W = GoogleFonts.poppins(
       fontSize: 14,
       color: const Color(0xff000000),
+      fontWeight: FontWeight.normal);
+  static final grey14 = GoogleFonts.poppins(
+      fontSize: 14,
+      color: const Color(0xff9A9A9A),
       fontWeight: FontWeight.normal);
 
   //s16
@@ -64,10 +68,30 @@ class AppTextStyle {
       fontSize: 12,
       color: const Color(0xffffffff),
       fontWeight: FontWeight.bold);
+  static final white12W = GoogleFonts.poppins(
+      fontSize: 12,
+      color: const Color(0xffffffff),
+      fontWeight: FontWeight.normal);
 
   //s16
   static final white16Bold = GoogleFonts.poppins(
       fontSize: 16,
+      color: const Color(0xffffffff),
+      fontWeight: FontWeight.bold);
+
+  static final white16W = GoogleFonts.poppins(
+      fontSize: 16,
+      color: const Color(0xffffffff),
+      fontWeight: FontWeight.normal);
+
+  //s14
+  static final white14W = GoogleFonts.poppins(
+      fontSize: 14,
+      color: const Color(0xffffffff),
+      fontWeight: FontWeight.bold);
+
+  static final white14Bold = GoogleFonts.poppins(
+      fontSize: 14,
       color: const Color(0xffffffff),
       fontWeight: FontWeight.bold);
 
@@ -76,4 +100,9 @@ class AppTextStyle {
       fontSize: 18,
       color: const Color(0xffffffff),
       fontWeight: FontWeight.bold);
+
+  static final white18W = GoogleFonts.poppins(
+      fontSize: 18,
+      color: const Color(0xffffffff),
+      fontWeight: FontWeight.normal);
 }
